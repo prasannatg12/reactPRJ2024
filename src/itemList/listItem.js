@@ -30,8 +30,8 @@ export default function ListItem(props) {
 
 
 <div style={{display:"flex", marginTop:10, justifyContent:"center"}}>
-          <button>Edit</button>
-          <button>Delete</button>
+          <button>EDIT</button>
+          <button>DELETE</button>
           </div>
         </div>)
       })}
