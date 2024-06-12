@@ -1,0 +1,29 @@
+.mainCompView {
+    /* border: 1px solid #aaa; */
+    margin: 5px;
+    padding: 5px;
+}
+
+.mainBody {
+    background-color: bisque;
+    flex:1;
+    flex-direction: row;
+    display: flex;
+
+}
+
+.tableItemDataCard {
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid #aaa;
+    padding-top: 5px;
+    display: flex;
+    flex-flow: row wrap;
+}
+.itemCard {
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    flex: 0 1 calc(17%);
+}
