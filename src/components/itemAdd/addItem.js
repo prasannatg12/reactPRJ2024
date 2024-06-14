@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import './style.css';
 import ReactWhatsapp from 'react-whatsapp';
-import { addItem as addItemAction } from "../slices/itemSlice";
+import { addItem as addItemAction } from "../../slices/itemSlice";
 import { UseDispatch, useDispatch } from "react-redux";
 
 
-
-var data = require('../assets/orgDetails.json');
+var data = require('../../assets/orgDetails.json');
 export default function AddItem(){
 //class AddItem extends React.Component {
   const  dispatch = useDispatch();
@@ -67,7 +66,7 @@ export default function AddItem(){
     return (
       <div className="mainComp" >
         <div style={{ display: "flex" }}>
-          <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Edit Item</span>
+          {/* <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Edit Item</span> */}
           <span 
           // onClick={this.toggleAddEditPanel.bind(this)}
            style={{ fontWeight: "bold", cursor: "pointer", padding: "5px", flex: "0.5", textAlign: "right", fontWeight: "normal" }}>Add Item</span>
@@ -91,9 +90,10 @@ export default function AddItem(){
       <div className="mainComp">
         <div style={{ display: "flex" }}>
           <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Add Item</span>
-          <span 
+          {/* <span 
           // onClick={this.toggleAddEditPanel.bind(this)} 
           style={{ fontWeight: "bold", padding: "5px", cursor: "pointer", flex: "0.5", textAlign: "right", fontWeight: "normal" }}>Edit Item</span>
+  */}
         </div>
         <div className="tableItemData">
           <div style={{ display: "flex", padding: "2px 6px" }}>

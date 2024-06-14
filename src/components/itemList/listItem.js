@@ -2,7 +2,7 @@ import React from "react";
 import './style.css';
 import ReactWhatsapp from 'react-whatsapp';
 import { useSelector } from "react-redux";
-var data = require('../assets/orgDetails.json');
+var data = require('../../assets/orgDetails.json');
 
 
 export default function ListItem(props) {
@@ -18,7 +18,7 @@ export default function ListItem(props) {
   return (
     <div className="mainCompView" style={{ width: props.width, flex: props.flex }}>
       <div style={{ display: "flex" }}>
-        <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Item List</span>
+        <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Item List (Preview)</span>
 
       </div>
       <div className="tableItemDataCard">
