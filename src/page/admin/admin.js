@@ -4,6 +4,7 @@ import AddItem from "../../components/itemAdd/addItem";
 import ListItem from "../../components/itemList/listItem";
 import { Provider } from "react-redux";
 import { store } from "../../store";
+import EditItem from "../../components/itemEdit/editItem";
 var data = require('../../assets/orgDetails.json');
 
 class Homepage extends React.Component {
@@ -77,9 +78,14 @@ class Homepage extends React.Component {
           display: "flex",
           width: "100%"
         }}>
-          {<AddItem
-            flex="0.5"
-          />}
+          {
+            <div>
+            <AddItem
+            
+          />
+          <EditItem
+          />
+          </div>}
           <ListItem
             flex="1"
           />

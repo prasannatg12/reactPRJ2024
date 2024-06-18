@@ -1,67 +1,20 @@
 import React, { useState } from "react";
 import './style.css';
 import ReactWhatsapp from 'react-whatsapp';
-import { addItem as addItemAction } from "../../slices/itemSlice";
+import { addItem as addItemAction, searchItem } from "../../slices/itemSlice";
 import { UseDispatch, useDispatch } from "react-redux";
 import path from "path";
 
 var data = require('../../assets/orgDetails.json');
-export default function AddItem(){
-//class AddItem extends React.Component {
+export default function EditItem(){
   const  dispatch = useDispatch();
+  const [searchItemText, setSearchItemText] = useState("")
   const [item,setItem] = useState({
           id: 0,
           name: "",
           price: 0,
           quantity: 0,
         });
-
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     time: "",
-  //     orgName: "",
-  //     addItemPanel: true,
-  //     message:"",
-  //     number:"",
-  //     item: {
-  //       name: "",
-  //       price: "",
-  //       quantity: "",
-  //     }
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   setTimeout(() => {
-  //     this.setState({
-  //       time: new Date().getDate().toFixed(0).padStart(2, '0') + "  " +
-  //         new Date().toLocaleString('default', { month: 'long' }) + ", " +
-  //         new Date().getFullYear().toFixed(0).padStart(2, '0') + "   " +
-  //         new Date().getHours().toFixed(0).padStart(2, '0') + " : " +
-  //         new Date().getMinutes().toFixed(0).padStart(2, '0') + " : " +
-  //         new Date().getSeconds().toFixed(0).padStart(2, '0')
-  //     })
-  //   }, 1000);
-
-  //   //
-  //   // console.log("DATA", data)
-  //   if (this.state.orgName === "") {
-  //     this.setState({ orgName: data.name })
-  //   }
-  //   // this.state.orgName === "" ? this.setState({orgName: data.name}) : null
-  // }
-
-  // toggleAddEditPanel() {
-  //   this.setState({
-  //     addItemPanel: !this.state.addItemPanel,
-  //     item: {
-  //       name: "",
-  //       price: "",
-  //       quantity: "",
-  //     }
-  //   })
-  // }
 
   const fnEditItem=() =>{
     return (
@@ -90,7 +43,7 @@ export default function AddItem(){
     return (
       <div className="mainComp">
         <div style={{ display: "flex" }}>
-          <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Add Item</span>
+          <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Edit Item</span>
           {/* <span 
           // onClick={this.toggleAddEditPanel.bind(this)} 
           style={{ fontWeight: "bold", padding: "5px", cursor: "pointer", flex: "0.5", textAlign: "right", fontWeight: "normal" }}>Edit Item</span>
@@ -101,18 +54,20 @@ export default function AddItem(){
             <div style={{ display: "flex", flex: 5, width:100 }}> Item Name </div>
             <div style={{ display: "flex", flex: 0 }}>
               <input onChange={(event) => {
-                setItem({
-                  // item: {
-                    ...item,
-                    name: event.target.value
-                  // }
-                })
+                            {dispatch(searchItem(event.target.value))}
+setSearchItemText(event.target.value)
+                // setItem({
+                //   // item: {
+                //     ...item,
+                //     name: event.target.value
+                //   // }
+                // })
               }} 
-              value={item.name}
+              value={searchItemText}
               />
             </div>
           </div>
-          <div style={{ display: "flex", padding: "2px 6px" }}>
+          {/* <div style={{ display: "flex", padding: "2px 6px" }}>
             <div style={{ display: "flex", flex: 0.5 }}> Price </div>
             <div style={{ display: "flex", flex: 0.5 }}>
               <input onChange={(event) => {
@@ -139,15 +94,15 @@ export default function AddItem(){
               value={item.quantity}
                />
             </div>
-          </div>
+          </div> */}
 
           <div style={{ display: "flex", padding: "16px 6px" }}>
             <button onClick={() => { console.log("item", item)
           ////aaaaaa
           
 
-          item.id = Date.now() + Math.random()
-            {dispatch(addItemAction(item))}
+          // item.id = Date.now() + Math.random()
+            {dispatch(searchItem(searchItemText))}
 
             // console.log("Before fs")
             // const fs = require('fs');
@@ -155,8 +110,8 @@ export default function AddItem(){
             // console.log("after fs")
             try{
               
-              const pathLocation = require("../../assets/items.json");
-              console.log(">>>>", pathLocation)
+              // const pathLocation = require("../../assets/items.json");
+              // console.log(">>>>", pathLocation)
             // console.log("Before red fs")
             // const pathLocation = "../../assets/items.json"
             //   let data = fs.readFileSync(path.resolve( pathLocation))
@@ -174,7 +129,7 @@ export default function AddItem(){
     // element.download =   require("../../src/item.txt");
     // document.body.appendChild(element); 
     // element.click();
-          }}>Add</button>
+          }}>Search Item</button>
           </div>
 
 

@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Idly",
+        "price": 12,
+        "quantity": 200
+    },
+    {
+        "name": "Dosai",
+        "price": 55,
+        "quantity": 10
+    },
+    {
+        "name": "Adai Special",
+        "price": 25,
+        "quantity": 80
+    }
+]
