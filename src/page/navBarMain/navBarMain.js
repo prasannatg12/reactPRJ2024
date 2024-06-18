@@ -44,7 +44,9 @@ export default function NavBarMain() {
     const fnCalldateTime = () => {
         // this.componentDidMount()
         return (
+            <>
             <h5 style={{ paddingRight: 20 }}>{time}</h5>
+            </>
         )
     }
 
