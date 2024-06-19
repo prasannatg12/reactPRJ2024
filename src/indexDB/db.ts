@@ -14,46 +14,54 @@ export enum Stores {
     Items = 'items'
 }
 
-export const deleteDB = (): Promise<Boolean> => {
+export const deleteDB = (): Promise<String> => {
     return new Promise((resolve) => {
         var request = indexedDB.deleteDatabase(DB_NAME_ITEMS);
         request.onsuccess = function() {
             console.log("Deleted successfully")
+            resolve("Deleted successfully")
         }
         request.onerror = function() {
             console.log("Error on Deletion")
+            resolve("Error on Deletion")
         }
         request.onblocked = function() {
             console.log("Blocked on Deletion")
+            resolve("Blocked on Deletion")
         }
 
     })
 }
 
-export const initDB = (): Promise<Boolean> => {
+export const initDB = (): Promise<String> => {
     return new Promise((resolve) =>{
-        
+        let message = ""
+
         // open the connection
         request = indexedDB.open(DB_NAME_ITEMS);
         request.onupgradeneeded = () => {
-
             db = request.result;
 
+            console.log("db.objectStoreNames", db.objectStoreNames)
             if(!db.objectStoreNames.contains(Stores.Items)) {
                 console.log("=====> Creating items store");
                 db.createObjectStore(Stores.Items, {keyPath:"id"})
+                message = "Object created, "
+            } else {
+                message = "Object falied to create, "
             }
+            resolve("Object Created !!!")
         };
 
         request.onsuccess = () => {
             db = request.result;
             version = db.version;
             console.log("request.onSuccess - initDB ", version);
-            resolve(true);
+            resolve( "DB Successfully created");
         }
 
         request.onerror = () => {
-            resolve(false);
+            resolve( "DB Creation Failed");
         }
 
     })
@@ -92,6 +100,7 @@ export const getAllData = <T>(storeName: Stores):Promise<T[]> => {
             try{
                 console.log("REQUEST.ONSUCCESS - GET ALLDATA");
                 db = request && request.result;
+                console.log("REQUEST:::::::::::", request, db)
                 const tx = db.transaction(storeName);
                 const store = tx.objectStore(storeName);
                 const res = store.getAll();
