@@ -7,6 +7,7 @@ import { store } from "./store";
 import { BrowserRouter, Switch, Route, Redirect, createBrowserRouter, RouterProvider, Routes } from 'react-router-dom';
 import NavBarMain from './page/navBarMain/navBarMain';
 import WelcomePage from './page/welcome/welcome';
+import Footer from './page/footer/footer';
 
 // const router = createBrowserRouter([{
 //   path:"/",
@@ -28,6 +29,7 @@ function App() {
       <Route path='/' element={<WelcomePage />} />
       <Route path='/admin' element={<Homepage />} />
       </Routes>
+      <Footer />
       {/* <Switch> */}
       {/* <Route path="/Welcome" component={Homepage} exact /> */}
       {/* <Homepage /> */}
