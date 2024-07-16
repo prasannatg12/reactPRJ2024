@@ -8,6 +8,8 @@ import { BrowserRouter, Switch, Route, Redirect, createBrowserRouter, RouterProv
 import NavBarMain from './page/navBarMain/navBarMain';
 import WelcomePage from './page/welcome/welcome';
 import Footer from './page/footer/footer';
+import Axios from '../src/axiosExercise/axios';
+import Order from './page/order/order';
 
 // const router = createBrowserRouter([{
 //   path:"/",
@@ -28,8 +30,10 @@ function App() {
       <Routes>
       <Route path='/' element={<WelcomePage />} />
       <Route path='/admin' element={<Homepage />} />
+      <Route path='/order' element={<Order />} />
       </Routes>
       <Footer />
+      {/* <Axios /> */}
       {/* <Switch> */}
       {/* <Route path="/Welcome" component={Homepage} exact /> */}
       {/* <Homepage /> */}
