@@ -3,14 +3,14 @@ import './style.css';
 import { deleteDB, initDB } from "../../indexDB/db.ts";
 
 
-export default function WelcomePage(){
+export default function WelcomePage() {
 
     const [status, setStatus] = useState("");
     const handleInitDB = () => {
 
         let dbStatus = initDB();
         console.log("dbSTATUS", dbStatus)
-        dbStatus.then(s=>{
+        dbStatus.then(s => {
             console.log("status iiiiiiiiiiiiiiiiiiiii", s)
             setStatus(s)
         })
@@ -35,26 +35,25 @@ export default function WelcomePage(){
     }
     return (
         <div>
-            <h2> <center>
-            Welcome Screen
-            </center>
-
-            
+            <h2>
+                <center>
+                    Welcome Screen
+                </center>
             </h2>
-            
-            <div>
-            <h5>Setup Required</h5>
-            
-            <div className="databaseCreattionDiv">
-                <span>DataBase </span>
-                <div>
-            <span className="clsInitialize" onClick={handleInitDB.bind(this)}>Initialize</span>
-            <span className="clsInitialize" onClick={handleDeleteDB.bind(this)}>Delete</span>
-            </div>
-            <span>Status:  {status} </span>
-            
 
-            </div>
+            <div>
+                <h5>Setup Required</h5>
+
+                <div className="databaseCreattionDiv">
+                    <span>DataBase </span>
+                    <div>
+                        <span className="clsInitialize" onClick={handleInitDB.bind(this)}>Initialize</span>
+                        <span className="clsInitialize" onClick={handleDeleteDB.bind(this)}>Delete</span>
+                    </div>
+                    <span>Status:  {status} </span>
+
+
+                </div>
             </div>
         </div>
     )

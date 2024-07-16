@@ -89,8 +89,8 @@ export default function NavBarMain() {
 
     let navigate = useNavigate();
 
-    const navigateAdminPage = () => {
-        let path = "/admin"
+    const navigateAdminPage = (pageToNavigate) => {
+        let path = "/" + pageToNavigate
         navigate(path)
 }
 
@@ -105,7 +105,8 @@ const navigateWelcomePage = () => {
             <div className="menu">
                 {/* <Link to="/Homepage">Admin</Link> */}
                 <div className="menuList" onClick={navigateWelcomePage.bind(this)} >Home</div>
-                <div className="menuList" onClick={navigateAdminPage.bind(this)} >Admin</div>
+                <div className="menuList" onClick={navigateAdminPage.bind(this, 'admin')} >Admin</div>
+                <div className="menuList" onClick={navigateAdminPage.bind(this, 'order')} >Order</div>
             </div>
         </div>
     )
