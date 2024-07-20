@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import './style.css';
 import { deleteDB, initDB } from "../../indexDB/db.ts";
+import { insertQuery } from "../../utils/mysqlconnect.js";
 
 
 export default function WelcomePage() {
+
 
     const [status, setStatus] = useState("");
     const handleInitDB = () => {
 
         let dbStatus = initDB();
         console.log("dbSTATUS", dbStatus)
+
+
+        // insertQuery()
         dbStatus.then(s => {
             console.log("status iiiiiiiiiiiiiiiiiiiii", s)
             setStatus(s)

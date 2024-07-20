@@ -11,7 +11,8 @@ export interface Item {
 }
 
 export enum Stores {
-    Items = 'items'
+    Items = 'items',
+    Variant = 'variant'
 }
 
 export const deleteDB = (): Promise<String> => {
@@ -48,7 +49,16 @@ export const initDB = (): Promise<String> => {
                 db.createObjectStore(Stores.Items, {keyPath:"id"})
                 message = "Object created, "
             } else {
-                message = "Object falied to create, "
+                message = "Object falied to create, Item "
+            }
+
+            // Variant DB
+            if(!db.objectStoreNames.contains(Stores.Variant)) {
+                console.log("=====> Creating items store");
+                db.createObjectStore(Stores.Variant, {keyPath:"id"})
+                message = "Object created, "
+            } else {
+                message = "Object falied to create, Variant"
             }
             resolve("Object Created !!!")
         };
@@ -101,8 +111,10 @@ export const getAllData = <T>(storeName: Stores):Promise<T[]> => {
                 console.log("REQUEST.ONSUCCESS - GET ALLDATA");
                 db = request && request.result;
                 console.log("REQUEST:::::::::::", request, db)
-                const tx = db.transaction(storeName);
+                const tx = db.transaction(storeName, 'readonly');
+                console.log(">>>1", tx);
                 const store = tx.objectStore(storeName);
+                console.log(">>>2", store);
                 const res = store.getAll();
                 res.onsuccess = () => {
                     resolve(res.result)
