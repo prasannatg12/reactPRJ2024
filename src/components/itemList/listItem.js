@@ -4,19 +4,20 @@ import ReactWhatsapp from 'react-whatsapp';
 import { useDispatch, useSelector } from "react-redux";
 import { Stores, addData, getAllData } from "../../indexDB/db.ts";
 import { removeItem } from "../../slices/itemSlice.js";
+import { Line } from 'rc-progress'
 // import * as fs from "fs";
 // import {} from "fs-extra"
 //import  * as a from 'atomically';
 var data = require('../../assets/orgDetails.json');
 export default function ListItem(props) {
 
-  const  dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [itemsPreview, setItemsPreview] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     // setInterval(() => {
-      handleGetAllData()      
+    handleGetAllData()
     // }, 100);
   }, [])
 
@@ -37,7 +38,7 @@ export default function ListItem(props) {
   })
 
   // Get items from Store
-  let itemsInStore =  useSelector((state) => (state && state.items))
+  let itemsInStore = useSelector((state) => (state && state.items))
 
   // let itemsSearched = useSelector((searchState) => {
   //   console.log("searchStatesearchStatesearchStatesearchStatesearchState", searchState)
@@ -47,12 +48,12 @@ export default function ListItem(props) {
   // Merge Local storage data and Store data
   items = [...items, ...itemsInStore]
   // setItemsPreview(items)
-  
+
   // useEffect(()=>{
-    if(items.length != (itemsPreview && itemsPreview.length)) {
-      setItemsPreview(items)
-      console.log("CCALLLLLLLLLLLLEEEDDDDD", items, itemsPreview)
-    }
+  if (items.length != (itemsPreview && itemsPreview.length)) {
+    setItemsPreview(items)
+    console.log("CCALLLLLLLLLLLLEEEDDDDD", items, itemsPreview)
+  }
   //   console.log("================================.....", items, itemsPreview)
   // }, [])
 
@@ -62,7 +63,7 @@ export default function ListItem(props) {
   const submitItem = async () => {
     try {
       for (let count = 0; count < items.length; count++) {
-        if(items[count].id === 0) {
+        if (items[count].id === 0) {
           items[count].id = Date.now() + Math.random()
           console.log("CALLED", items[count])
         }
@@ -83,27 +84,28 @@ export default function ListItem(props) {
   }
   return (
     <div className="mainCompView" style={{ width: props.width, flex: props.flex }}>
-      <div style={{ display: "flex", placeContent:"space-between" }}>
+      <div style={{ display: "flex", placeContent: "space-between" }}>
         <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Item List (Preview)</span>
         <div id="addButton"
-      style={items.length !=0 ?{display:"flex"} :{display:"none"}}
-      onClick={submitItem.bind(this)} >ADD</div>
+          style={items.length != 0 ? { display: "flex" } : { display: "none" }}
+          onClick={submitItem.bind(this)} >ADD</div>
 
       </div>
       <div className="tableItemDataCard">
         {itemsPreview != null && itemsPreview.sort(function (a, b) {
-          console.log("aaaaaaaaaaaaa",a,b )
-          if(a.length!= 0 && b!= undefined){
-          // if ((a && a.name != undefined && a.name.toLowerCase()) < (b && b.name != undefined && b.name.toLowerCase())) return -1;
-          // if ((a && a.name != undefined && a.name.toLowerCase()) > (b && b.name != undefined && b.name.toLowerCase())) return 1;
-          if ((a.name.toLowerCase()) < (b.name.toLowerCase())) return -1;
-          if ((a.name.toLowerCase()) > (b.name.toLowerCase())) return 1;
-          return 0;
+          console.log("aaaaaaaaaaaaa", a, b)
+          if (a.length != 0 && b != undefined) {
+            // if ((a && a.name != undefined && a.name.toLowerCase()) < (b && b.name != undefined && b.name.toLowerCase())) return -1;
+            // if ((a && a.name != undefined && a.name.toLowerCase()) > (b && b.name != undefined && b.name.toLowerCase())) return 1;
+            if ((a.name.toLowerCase()) < (b.name.toLowerCase())) return -1;
+            if ((a.name.toLowerCase()) > (b.name.toLowerCase())) return 1;
+            return 0;
           }
         })
           .map((item) => {
-            console.log("mapped item", item, items, "---->>>>" ,itemsPreview)
+            console.log("mapped item", item, items, "---->>>>", itemsPreview)
             return (<div className="itemCard" key={item.name} >
+
               <span style={{ display: "flex", justifyContent: "center", fontWeight: "bold" }}> {item.name} </span>
               <span style={{ display: "flex", justifyContent: "center" }}> Rs. {item.price} </span>
               <span style={{ display: "flex", justifyContent: "center" }}> Availability {item.quantity > 0 ? item.quantity : "Not in Stock"} </span>
@@ -113,36 +115,56 @@ export default function ListItem(props) {
               </div>
             </div>)
           })}
-          <div style={items.length != 0 ?{display:"none"}:{fontSize:12, display:"flex", flex:1, justifyContent:"center"}}>
-            New items, that are added will be displayed here !!!
-          </div>
+        <div style={items.length != 0 ? { display: "none" } : { fontSize: 12, display: "flex", flex: 1, justifyContent: "center" }}>
+          New items, that are added will be displayed here !!!
+        </div>
       </div>
 
-      <div style={{marginTop:20}}>
+      <div style={{ marginTop: 20 }}>
         <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Item List</span>
         <div className="tableItemDataCard">
 
-        {data.sort(function (a, b) {
-          if(a.length!= 0 && b!= undefined){
-          // if ((a && a.name != undefined && a.name.toLowerCase()) < (b && b.name != undefined && b.name.toLowerCase())) return -1;
-          // if ((a && a.name != undefined && a.name.toLowerCase()) > (b && b.name != undefined && b.name.toLowerCase())) return 1;
-          if ((a.name.toLowerCase()) < (b.name.toLowerCase())) return -1;
-          if ((a.name.toLowerCase()) > (b.name.toLowerCase())) return 1;
-          return 0;
-          }
-        }).map(item => {
-          return (<div className="itemCard" key={item.name} >
-          <span style={{ display: "flex", justifyContent: "center", fontWeight: "bold" }}> {item.name} </span>
-          <span style={{ display: "flex", justifyContent: "center" }}> Rs. {item.price} </span>
-          <span style={{ display: "flex", justifyContent: "center" }}> Availability {item.quantity > 0 ? item.quantity : "Not in Stock"} </span>
-          {/* <div style={{ display: "flex", marginTop: 10, justifyContent: "center" }}>
+          {data.sort(function (a, b) {
+            if (a.length != 0 && b != undefined) {
+              // if ((a && a.name != undefined && a.name.toLowerCase()) < (b && b.name != undefined && b.name.toLowerCase())) return -1;
+              // if ((a && a.name != undefined && a.name.toLowerCase()) > (b && b.name != undefined && b.name.toLowerCase())) return 1;
+              if ((a.name.toLowerCase()) < (b.name.toLowerCase())) return -1;
+              if ((a.name.toLowerCase()) > (b.name.toLowerCase())) return 1;
+              return 0;
+            }
+          }).map(item => {
+            return (<div className="itemCard" key={item.name} >
+              <div style={{ display: "flex", placeContent: "space-evenly" }}>
+                {/* <span>{item.itemsInStock}
+                </span> */}
+                <span title={item.itemsInStock} style={{
+                  height: 2.5, marginTop: 2,
+                  alignSelf: "center",
+                  display: "flex"
+                }}>
+                <Line
+                
+                 percent={(item.itemsInStock / item.quantity) * 100} strokeWidth={2} strokeColor="#056"
+                />
+                </span>
+                <span 
+                // style={{border:"1px solid #aaa", padding: 2, height:30, width:30, borderRadius:30, display:"flex", justifyContent:"center", alignItems:"center"}}
+                >
+                  {item.itemsInStock }/{ item.quantity}
+                </span>
+              </div>
+              <span style={{ display: "flex", fontWeight: "bold" }}> {item.name} </span>
+              <span style={{ display: "flex", fontSize: 12 }}> Rs. {item.price} </span>
+              <span style={{ display: "flex", fontSize: 12 }}>{item.variantName}</span>
+              {/* <span style={{ display: "flex", justifyContent: "center" }}> Availability {item.quantity > 0 ? item.quantity : "Not in Stock"} </span> */}
+              {/* <div style={{ display: "flex", marginTop: 10, justifyContent: "center" }}>
             <button>EDIT</button>
             <button>DELETE</button>
           </div> */}
-        </div>)
-        })}
-        
-      </div>
+            </div>)
+          })}
+
+        </div>
       </div>
     </div>
   )

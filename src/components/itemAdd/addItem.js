@@ -1,96 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './style.css';
 import ReactWhatsapp from 'react-whatsapp';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css'
 import { addItem as addItemAction } from "../../slices/itemSlice";
 import { UseDispatch, useDispatch } from "react-redux";
 import path from "path";
+import { Stores, getAllData } from "../../indexDB/db.ts";
 
 var data = require('../../assets/orgDetails.json');
 export default function AddItem(){
-//class AddItem extends React.Component {
+  
+
   const  dispatch = useDispatch();
+  const [variant, setVariant] = useState([]);
   const [item,setItem] = useState({
           id: 0,
           name: "",
+          variantName: "",
           price: 0,
           quantity: 0,
+          itemsInStock: 0
         });
 
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     time: "",
-  //     orgName: "",
-  //     addItemPanel: true,
-  //     message:"",
-  //     number:"",
-  //     item: {
-  //       name: "",
-  //       price: "",
-  //       quantity: "",
-  //     }
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   setTimeout(() => {
-  //     this.setState({
-  //       time: new Date().getDate().toFixed(0).padStart(2, '0') + "  " +
-  //         new Date().toLocaleString('default', { month: 'long' }) + ", " +
-  //         new Date().getFullYear().toFixed(0).padStart(2, '0') + "   " +
-  //         new Date().getHours().toFixed(0).padStart(2, '0') + " : " +
-  //         new Date().getMinutes().toFixed(0).padStart(2, '0') + " : " +
-  //         new Date().getSeconds().toFixed(0).padStart(2, '0')
-  //     })
-  //   }, 1000);
-
-  //   //
-  //   // console.log("DATA", data)
-  //   if (this.state.orgName === "") {
-  //     this.setState({ orgName: data.name })
-  //   }
-  //   // this.state.orgName === "" ? this.setState({orgName: data.name}) : null
-  // }
-
-  // toggleAddEditPanel() {
-  //   this.setState({
-  //     addItemPanel: !this.state.addItemPanel,
-  //     item: {
-  //       name: "",
-  //       price: "",
-  //       quantity: "",
-  //     }
-  //   })
-  // }
-
-  const fnEditItem=() =>{
-    return (
-      <div className="mainComp" >
-        <div style={{ display: "flex" }}>
-          {/* <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Edit Item</span> */}
-          <span 
-          // onClick={this.toggleAddEditPanel.bind(this)}
-           style={{ fontWeight: "bold", cursor: "pointer", padding: "5px", flex: "0.5", textAlign: "right", fontWeight: "normal" }}>Add Item</span>
-        </div>
-        <div className="tableItemData">
-          <div style={{ display: "flex", padding: "2px 6px" }}> <div style={{ display: "flex", flex: 0.5 }}> Item Name: </div> <div style={{ display: "flex", flex: 0.5 }}> <input /> </div> </div>
-          <div style={{ display: "flex", padding: "2px 6px" }}> <div style={{ display: "flex", flex: 0.5 }}> Item Price: </div> <div style={{ display: "flex", flex: 0.5 }}> <input /> </div> </div>
-          <div style={{ display: "flex", padding: "2px 6px" }}> <div style={{ display: "flex", flex: 0.5 }}> Quantity: </div> <div style={{ display: "flex", flex: 0.5 }}> <input /> </div> </div>
-
-          <div style={{ display: "flex", padding: "16px 6px" }}>
-            <button>EDIT</button>
-          </div>
-        </div>
-      </div>
-    )
+        
+  useEffect(()=>{
+    getVariantData()
+  }, 0)
+  const getVariantData = async () => {
+    let variantData = await getAllData(Stores.Variant);
+    console.log("VARIANT DATA", variantData)
+    let arrVariant = []
+    variantData.map(each => {
+      arrVariant.push(each.variantName)
+    })
+    setVariant(arrVariant)
   }
-
-
+  
   const fnAddItem=()=> {
     return (
       <div className="mainComp">
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <span style={{ fontWeight: "bold", padding: "5px", flex: "0.5" }}>Add Item</span>
+          <span style={{ padding: "5px" }} onClick={()=>getVariantData()} >Refresh</span>
           {/* <span 
           // onClick={this.toggleAddEditPanel.bind(this)} 
           style={{ fontWeight: "bold", padding: "5px", cursor: "pointer", flex: "0.5", textAlign: "right", fontWeight: "normal" }}>Edit Item</span>
@@ -113,6 +65,30 @@ export default function AddItem(){
             </div>
           </div>
           <div style={{ display: "flex", padding: "2px 6px" }}>
+            <div style={{ display: "flex", flex: 0.5 }}> Variant </div>
+            <div style={{ display: "flex", flex: 0.85 }}>
+              <Dropdown options={variant}
+              placeholder={"Select Item"}
+              onChange={(event)=>{
+                console.log(">>>>>>>>>>>>>", event)
+                setItem({
+                  ...item,
+                  variantName: event && event.value
+                }, ()=>console.log(item, "<<<<<<<<<<<<<<<<<<"))
+              }}
+              value={item.variantName}
+              />
+              {/* <input onChange={(event) => {
+                setItem({
+                  ...item,
+                  variantName: event.target.value
+                })
+              }}
+              value={item.variantName}
+               /> */}
+            </div>
+          </div>
+          <div style={{ display: "flex", padding: "2px 6px" }}>
             <div style={{ display: "flex", flex: 0.5 }}> Price </div>
             <div style={{ display: "flex", flex: 0.5 }}>
               <input onChange={(event) => {
@@ -132,6 +108,7 @@ export default function AddItem(){
                 setItem({
                   // item: {
                     ...item,
+                    itemsInStock: parseInt(event.target.value),
                     quantity: parseInt(event.target.value)
                   // }
                 })
@@ -166,7 +143,7 @@ export default function AddItem(){
             } catch{
               
             }
-            setItem({name:"", price:0, quantity:0})
+            setItem({name:"", variantName: "", price:0, quantity:0, itemsInStock: 0})
     //       const element = document.createElement("a");
     // const textFile = new Blob([JSON.stringify(this.state.item)], {type: "text/plain"}); //pass data from localStorage API to blob
     // element.href = URL.createObjectURL(textFile);

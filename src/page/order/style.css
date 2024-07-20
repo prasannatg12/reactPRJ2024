@@ -17,3 +17,27 @@
     display: flex;
 
 }
+
+.eachTable, .chosenTable, .reservedTable {
+    display: grid;
+    padding: 10px 50px;
+    margin: 10px;
+    place-content: center;
+    text-align: center;
+    width: 20px;
+    border: 1px solid #00055f;
+}
+.reservedTable {
+    background-color: #f00;
+    color:#fff;
+    cursor: no-drop;
+}
+.chosenTable{
+    background-color: #00055f;
+    color:#fff;
+}
+
+.eachTable:hover {
+    background-color: #00055f22;
+    cursor: pointer;
+}

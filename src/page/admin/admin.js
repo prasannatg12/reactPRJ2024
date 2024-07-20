@@ -5,6 +5,7 @@ import ListItem from "../../components/itemList/listItem";
 import { Provider } from "react-redux";
 import { store } from "../../store";
 import EditItem from "../../components/itemEdit/editItem";
+import AddVariant from "../../components/variantAdd/addVariant";
 var data = require('../../assets/orgDetails.json');
 
 class Homepage extends React.Component {
@@ -83,6 +84,7 @@ class Homepage extends React.Component {
             <AddItem
             
           />
+          <AddVariant />
           <EditItem
           />
           </div>}
