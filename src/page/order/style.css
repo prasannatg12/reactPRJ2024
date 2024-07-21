@@ -24,7 +24,8 @@
     margin: 10px;
     place-content: center;
     text-align: center;
-    width: 20px;
+    width: 10px;
+    border-radius: 15px;
     border: 1px solid #00055f;
 }
 .reservedTable {
@@ -39,5 +40,110 @@
 
 .eachTable:hover {
     background-color: #00055f22;
+    cursor: pointer;
+}
+
+.itemName {
+        padding: 5px;
+        margin: 5px;
+        cursor: pointer;
+        min-width: 100px;
+        max-width: 100px;
+        min-height: 80px;
+        max-height: auto;
+        border: 1px solid #00055f99;
+        border-radius: 5px;
+        place-content: center;
+        text-align: center;    
+}
+
+.itemNameGrouped {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+}
+
+
+.menuItemGroupedMain {
+    margin: 10px 0px;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    /* flex: 0.5 1 0%; */
+    overflow: auto;
+    scrollbar-width: none;
+    height: 470px;
+}
+.cartMain {
+    padding: 0px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex: 0.85 1;
+    overflow: auto;
+    scrollbar-width: none;
+    height: 470px;
+}
+
+.closeIconItem {
+    margin-right: -18px;
+    color: red;
+    margin-top: 0px;
+    margin-bottom: -18px;
+    height: 16px;
+    width: 16px;
+    text-align: center;
+    font-size: 12px;
+    align-self: center;
+    position: relative;
+    background-color: white;
+    border: 1px solid red;
+    border-radius: 21px;
+}
+
+.closeIconItemHide {
+    margin-right: -15px;
+    color: red;
+    display: none;
+    margin-top: -45px;
+    margin-bottom: 35px;
+    height: 16px;
+    width: 16px;
+    text-align: center;
+    font-size: 12px;
+    align-self: center;
+    background-color: white;
+    border: 1px solid red;
+    border-radius: 21px;
+}
+
+.counterButton {
+    cursor: pointer;
+    margin: 0px 6px;
+    /* padding: 0px 6px; */
+    font-weight: bold;
+    border: 1px solid #00055f;
+    border-radius: 20px;
+    height: 25px;
+    font-family: system-ui;
+    width: 26px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    padding-bottom: 0px;
+}
+
+.cartTitle {
+    font-variant-caps: petite-caps;
+}
+
+.cartActionButton {
+    padding: 3px 22px;
+    margin: 0px 8px;
+    background: #00055f;
+    color:white;
+    font-variant-caps: petite-caps;
+    border-radius: 20px;
     cursor: pointer;
 }
