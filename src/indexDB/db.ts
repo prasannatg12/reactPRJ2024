@@ -108,15 +108,12 @@ export const getAllData = <T>(storeName: Stores):Promise<T[]> => {
 
         request.onsuccess = () => {
             try{
-                console.log("REQUEST.ONSUCCESS - GET ALLDATA");
                 db = request && request.result;
-                console.log("REQUEST:::::::::::", request, db)
                 const tx = db.transaction(storeName, 'readonly');
-                console.log(">>>1", tx);
                 const store = tx.objectStore(storeName);
-                console.log(">>>2", store);
                 const res = store.getAll();
                 res.onsuccess = () => {
+                    console.log("FINAL GETALL", res.result)
                     resolve(res.result)
                 }
                 res.onerror = () => {
@@ -133,5 +130,59 @@ export const getAllData = <T>(storeName: Stores):Promise<T[]> => {
             console.log("ERROR ON GET ALL DATA")
         }
 
+    })
+}
+
+
+// select query on indexed db
+export const getData = <T>(storeName: Stores, searchTerm: String):Promise<T[]> => {
+    return new Promise((resolve) => {
+        request = indexedDB.open(DB_NAME_ITEMS);
+        let item = [];
+        request.onsuccess = () => {
+            try{
+                db = request && request.result;
+                const tx = db.transaction(storeName, 'readwrite');
+                const store = tx.objectStore(storeName);
+                const res = store.getAll();
+                const cursorreq = store.openCursor();
+                cursorreq.onsuccess = function(e) {
+                    let cursor = (e?.target as IDBRequest).result;
+                    if(cursor) {
+                        if(cursor.value.name.toString().toUpperCase().indexOf(searchTerm.toUpperCase()) !== -1) {
+                            console.log("we found it", cursor.value)
+                            item.push(cursor.value as never)
+                            console.log("array item final", item)
+                        }
+                        cursor.continue();
+                    }       
+                    // if(!item.length) {
+                    //     resolve([]);
+                    // } else {
+                    //     resolve(item);    
+                    // }
+                }
+
+                tx.oncomplete = (event) => {
+                    console.log("TRANSAACTION COMP", item)
+                    resolve(item)
+                }
+
+
+                // res.onsuccess = () => {
+                //     resolve(res.result)
+                // }
+                // res.onerror = () => {
+                //     console.log("============ ERROR ON GET ALLDATA ===========")
+                // }
+    
+            }
+            catch(exception) {
+                console.log("============ CaughtException: ERROR ON GET ALLDATA ===========", exception)
+            }
+        }
+        request.onerror = () => {
+            console.log("ERROR ON GET ALL DATA")
+        }
     })
 }
