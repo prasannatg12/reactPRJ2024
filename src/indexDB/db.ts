@@ -12,7 +12,9 @@ export interface Item {
 
 export enum Stores {
     Items = 'items',
-    Variant = 'variant'
+    Variant = 'variant',
+    Order = 'order',
+    OrderHistory = 'orderHistory'
 }
 
 export const deleteDB = (): Promise<String> => {
@@ -60,6 +62,25 @@ export const initDB = (): Promise<String> => {
             } else {
                 message = "Object falied to create, Variant"
             }
+
+            // Order DB
+            if(!db.objectStoreNames.contains(Stores.Order)) {
+                console.log("=====> Creating items store");
+                db.createObjectStore(Stores.Order, {keyPath:"id"})
+                message = "Object created, "
+            } else {
+                message = "Object falied to create, Order"
+            }
+
+            // Order History DB
+            if(!db.objectStoreNames.contains(Stores.OrderHistory)) {
+                console.log("=====> Creating items store");
+                db.createObjectStore(Stores.OrderHistory, {keyPath:"id"})
+                message = "Object created, "
+            } else {
+                message = "Object falied to create, Order History"
+            }
+
             resolve("Object Created !!!")
         };
 
@@ -134,6 +155,37 @@ export const getAllData = <T>(storeName: Stores):Promise<T[]> => {
 }
 
 
+export const getDataByKey = <T>(storeName: Stores, key: any):Promise<T[]> => {
+    return new Promise((resolve) => {
+        request = indexedDB.open(DB_NAME_ITEMS);
+
+        request.onsuccess = () => {
+            try{
+                db = request && request.result;
+                const tx = db.transaction(storeName, 'readonly');
+                const store = tx.objectStore(storeName);
+                const res = store.get(key);
+                res.onsuccess = () => {
+                    console.log("FINAL GETALL", res.result)
+                    resolve(res.result)
+                }
+                res.onerror = () => {
+                    console.log("============ ERROR ON GET ALLDATA ===========")
+                }
+    
+            }
+            catch(exception) {
+                console.log("============ CaughtException: ERROR ON GET ALLDATA ===========", exception)
+            }
+        }
+
+        request.onerror = () => {
+            console.log("ERROR ON GET ALL DATA")
+        }
+
+    })
+}
+
 // select query on indexed db
 export const getData = <T>(storeName: Stores, searchTerm: String):Promise<T[]> => {
     return new Promise((resolve) => {
@@ -183,6 +235,22 @@ export const getData = <T>(storeName: Stores, searchTerm: String):Promise<T[]> =
         }
         request.onerror = () => {
             console.log("ERROR ON GET ALL DATA")
+        }
+    })
+}
+
+export const deleteByID = <T>(storeName: Stores, id: any):Promise<String> => {
+    return new Promise(resolve => {
+        
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        let query = store.delete(id);
+        query.onsuccess = (event) => {
+            console.log("DELETE", event)
+        }
+        tx.oncomplete = () => {
+            db.close();
+            resolve("success");
         }
     })
 }

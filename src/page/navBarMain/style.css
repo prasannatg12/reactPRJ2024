@@ -29,5 +29,13 @@
 
 }
 .menuList {
-    padding: 5px;
+    /* padding: 5px; */
+    border:1px solid #00055f50;
+    margin: 2px 2px;
+    border-radius: 10px;
+}
+
+.menuList:hover {
+    
+    background-color:  #00055f0f ;
 }

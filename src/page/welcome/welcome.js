@@ -46,7 +46,7 @@ export default function WelcomePage() {
                 </center>
             </h2>
 
-            <div>
+            <div style={{margin:"0px 30px"}}>
                 <h5>Setup Required</h5>
 
                 <div className="databaseCreattionDiv">

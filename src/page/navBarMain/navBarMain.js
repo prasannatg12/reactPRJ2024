@@ -10,6 +10,7 @@ var data = require('../../assets/orgDetails.json');
 export default function NavBarMain() {
     const [logoImgUrl, setLogoImgUrl] = useState("");
     const [orgName, setOrgName] = useState("");
+    const [navigatedPage, setNavigatedPage] = useState("");
     const [time, setTime] = useState("");
     // class Welcome extends React.Component {
     //   constructor() {
@@ -91,12 +92,16 @@ export default function NavBarMain() {
 
     const navigateAdminPage = (pageToNavigate) => {
         let path = "/" + pageToNavigate
+        
+        setNavigatedPage(pageToNavigate)
         navigate(path)
-}
+    }
 
 const navigateWelcomePage = () => {
     let path = "/"
+    setNavigatedPage("home")
     navigate(path)
+    
 }
 
     return (
@@ -104,9 +109,10 @@ const navigateWelcomePage = () => {
             {fnHomepage()}
             <div className="menu">
                 {/* <Link to="/Homepage">Admin</Link> */}
-                <div className="menuList" onClick={navigateWelcomePage.bind(this)} >Home</div>
-                <div className="menuList" onClick={navigateAdminPage.bind(this, 'admin')} >Admin</div>
-                <div className="menuList" onClick={navigateAdminPage.bind(this, 'order')} >Order</div>
+                <div style={navigatedPage === 'home' ? {fontWeight:"bold"} :{fontWeight:"normal"}} className="menuList" onClick={navigateWelcomePage.bind(this)} >Home</div>
+                <div style={navigatedPage === 'admin' ? {fontWeight:"bold"} :{fontWeight:"normal"}}  className="menuList" onClick={navigateAdminPage.bind(this, 'admin')} >Admin</div>
+                <div style={navigatedPage === 'order' ? {fontWeight:"bold"} :{fontWeight:"normal"}} className="menuList" onClick={navigateAdminPage.bind(this, 'order')} >Order Item</div>
+                <div style={navigatedPage === 'manageOrder' ? {fontWeight:"bold"} :{fontWeight:"normal"}} className="menuList" onClick={navigateAdminPage.bind(this, 'manageOrder')} >Manage Orders</div>
             </div>
         </div>
     )
